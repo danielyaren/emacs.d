@@ -1,0 +1,24 @@
+[submodule "lib/use-package"]
+	path = lib/use-package
+	url = https://github.com/jwiegley/use-package
+[submodule "lib/s"]
+	path = lib/s
+	url = https://github.com/magnars/s.el
+[submodule "lib/dash"]
+	path = lib/dash
+	url = https://github.com/magnars/dash.el
+[submodule "lib/emacs-request"]
+	path = lib/emacs-request
+	url = https://github.com/tkf/emacs-request
+[submodule "lib/emacs-async"]
+	path = lib/emacs-async
+	url = https://github.com/jwiegley/emacs-async
+[submodule "lib/avy"]
+	path = lib/avy
+	url = https://github.com/abo-abo/avy
+[submodule "lib/ace-window"]
+	path = lib/ace-window
+	url = https://github.com/abo-abo/ace-window
+[submodule "lib/find-file-in-project"]
+	path = lib/find-file-in-project
+	url = https://github.com/redguardtoo/find-file-in-project

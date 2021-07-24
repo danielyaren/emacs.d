@@ -1,0 +1,18 @@
+* Emacs
+This is my emacs configuration. This is not an distribution but feel free to use it.
+
+I stopped using package managers because they increase the load time on Windows. Instead, packages I want are managed as git submodules in the [[https://github.com/danielyaren/emacs.d/tree/main/lib][lib]] directory and configured with [[https://github.com/jwiegley/use-package][use-package]].
+
+* Installation
+
+To install:
+
+#+begin_src conf
+git clone https://github.com/danielyaren/emacs.git .emacs.d
+cd .emacs.d
+git submodule update --init --recursive
+#+end_src
+
+* External Dependencies
+
+This emacs requires [[https://github.com/sharkdp/fd][fd]] (for [[https://github.com/technomancy/find-file-in-project][find-file-in-project]]) and [[https://github.com/BurntSushi/ripgrep][ripgrep]] (for [[https://github.com/Wilfred/deadgrep][deadgrep]], [[https://github.com/abo-abo/swiper][counsel-rg]])
