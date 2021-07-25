@@ -22,3 +22,6 @@
 [submodule "lib/find-file-in-project"]
 	path = lib/find-file-in-project
 	url = https://github.com/redguardtoo/find-file-in-project
+[submodule "lib/consult"]
+	path = lib/consult
+	url = https://github.com/minad/consult
