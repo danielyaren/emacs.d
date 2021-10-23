@@ -22,3 +22,6 @@
 [submodule "lib/find-file-in-project"]
 	path = lib/find-file-in-project
 	url = https://github.com/redguardtoo/find-file-in-project
+[submodule "lib/which-key"]
+	path = lib/which-key
+	url = https://github.com/justbur/emacs-which-key

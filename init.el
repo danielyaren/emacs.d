@@ -334,7 +334,7 @@ point reaches the beginning or end of the buffer, stop there."
             (variable-pitch-mode 1)
             (visual-line-mode 1)))
 
-(load-theme 'modus-operandi t)
+(load-theme 'modus-vivendi t)
 
 (defun theme/toggle ()
   "Toggle between `modus-operandi' and `modus-vivendi' themes."
@@ -430,6 +430,10 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package request
   :defer
   :load-path "lib/emacs-request")
+
+(use-package which-key
+  :load-path "lib/which-key"
+  :hook (emacs-startup . which-key-mode))
 
 (use-package async
   :load-path "lib/emacs-async"
