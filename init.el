@@ -419,6 +419,13 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; macOS specific settings.
 (when (eq system-type 'darwin)
+  (let ((frame-options '(
+                         (width . 200)
+                         (height . 50)
+                         (left . 100)
+                         (top . 50))))
+    (setq-default initial-frame-alist frame-options)
+    (setq-default default-frame-alist frame-options))  
   (menu-bar-mode +1)
   (when (fboundp 'set-fontset-font)
     (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
