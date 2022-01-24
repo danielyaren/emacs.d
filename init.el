@@ -403,6 +403,13 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; Windows specific settings.
 (when (eq system-type 'windows-nt)
+  (let ((frame-options '(
+                         (width . 200)
+                         (height . 50)
+                         (left . 50)
+                         (top . 50))))
+    (setq-default initial-frame-alist frame-options)
+    (setq-default default-frame-alist frame-options))
   (setq-default w32-get-true-file-attributes nil
 		            inhibit-compacting-font-caches t
 		            abbreviated-home-dir "\\`'")
