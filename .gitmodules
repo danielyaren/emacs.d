@@ -25,3 +25,21 @@
 [submodule "lib/which-key"]
 	path = lib/which-key
 	url = https://github.com/justbur/emacs-which-key
+[submodule "lib/ido-completing-read-plus"]
+	path = lib/ido-completing-read-plus
+	url = https://github.com/DarwinAwardWinner/ido-completing-read-plus.git
+[submodule "lib/amx"]
+	path = lib/amx
+	url = https://github.com/DarwinAwardWinner/amx.git
+[submodule "lib/wgrep"]
+	path = lib/wgrep
+	url = https://github.com/mhayashi1120/Emacs-wgrep
+[submodule "lib/transient"]
+	path = lib/transient
+	url = https://github.com/magit/transient
+[submodule "lib/deadgrep"]
+	path = lib/deadgrep
+	url = https://github.com/Wilfred/deadgrep.git
+[submodule "lib/spinner"]
+	path = lib/spinner
+	url = https://github.com/Malabarba/spinner.el.git

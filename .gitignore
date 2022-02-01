@@ -19,6 +19,7 @@ tramp
 smex-items
 network-security.data
 bookmarks
+amx-items
 
 # compiled files
 *.elc

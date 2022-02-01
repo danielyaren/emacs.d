@@ -143,6 +143,13 @@
 ;; we say “so long” to the buffer’s major mode
 (global-so-long-mode +1)
 
+(setq-default ido-enable-flex-matching t
+              ido-use-filename-at-point 'guess
+              ido-ignore-extensions t
+              ido-everywhere t)
+
+(ido-mode t)
+
 ;; More performant rapid scrolling over unfontified regions.
 (setq-default fast-but-imprecise-scrolling t)
 
@@ -434,16 +441,28 @@ point reaches the beginning or end of the buffer, stop there."
   (set-face-attribute 'variable-pitch nil :font "Helvetica Neue-14.0"))
 
 (use-package s
-  :defer
-  :load-path "lib/s")
+  :load-path "lib/s"
+  :defer)
 
 (use-package dash
-  :defer
-  :load-path "lib/dash")
+  :load-path "lib/dash"
+  :defer)
 
 (use-package request
-  :defer
-  :load-path "lib/emacs-request")
+  :load-path "lib/emacs-request"
+  :defer)
+
+(use-package wgrep
+  :load-path "lib/wgrep"
+  :defer)
+
+(use-package transient
+  :load-path "lib/transient/lisp"
+  :defer)
+
+(use-package spinner
+  :load-path "lib/spinner"
+  :defer)
 
 (use-package which-key
   :load-path "lib/which-key"
@@ -477,8 +496,21 @@ point reaches the beginning or end of the buffer, stop there."
 
 (use-package find-file-in-project
   :load-path "lib/find-file-in-project"
-  :config (setq-default ffip-use-rust-fd t)
+  :config (setq-default ffip-use-rust-fd t
+                        ffip-prefer-ido-mode t)
   :bind (("C-x j" . find-file-in-project)
          ("C-x J" . find-file-in-current-directory)))
+
+(use-package ido-completing-read+
+  :load-path "lib/ido-completing-read-plus"
+  :config (ido-ubiquitous-mode 1))
+
+(use-package amx
+  :load-path "lib/amx"
+  :config (amx-mode))
+
+(use-package deadgrep
+  :load-path "lib/deadgrep"
+  :bind ("C-;" . deadgrep))
 
 ;;; init.el ends here
