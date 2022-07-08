@@ -143,13 +143,6 @@
 ;; we say “so long” to the buffer’s major mode
 (global-so-long-mode +1)
 
-(setq-default ido-enable-flex-matching t
-              ido-use-filename-at-point 'guess
-              ido-ignore-extensions t
-              ido-everywhere t)
-
-(ido-mode t)
-
 ;; More performant rapid scrolling over unfontified regions.
 (setq-default fast-but-imprecise-scrolling t)
 
@@ -329,7 +322,6 @@ point reaches the beginning or end of the buffer, stop there."
                 org-fontify-done-headline t
                 org-fontify-quote-and-verse-blocks t
                 org-image-actual-width nil
-                org-completion-use-ido t
                 org-startup-folded "showall"
                 org-todo-keyword-faces
                 '(("TODO" . org-warning)
@@ -420,8 +412,8 @@ point reaches the beginning or end of the buffer, stop there."
   (setq-default w32-get-true-file-attributes nil
 		            inhibit-compacting-font-caches t
 		            abbreviated-home-dir "\\`'")
-  (set-face-attribute 'default nil :font "Cascadia Code-10.0")
-  (set-face-attribute 'fixed-pitch nil :font "Cascadia Code-10.0")
+  (set-face-attribute 'default nil :font "Consolas-10.0")
+  (set-face-attribute 'fixed-pitch nil :font "Consolas-10.0")
   (set-face-attribute 'variable-pitch nil :font "Constantia-14.0"))
 
 ;; macOS specific settings.
@@ -496,18 +488,9 @@ point reaches the beginning or end of the buffer, stop there."
 
 (use-package find-file-in-project
   :load-path "lib/find-file-in-project"
-  :config (setq-default ffip-use-rust-fd t
-                        ffip-prefer-ido-mode t)
+  :config (setq-default ffip-use-rust-fd t)
   :bind (("C-x j" . find-file-in-project)
          ("C-x J" . find-file-in-current-directory)))
-
-(use-package ido-completing-read+
-  :load-path "lib/ido-completing-read-plus"
-  :config (ido-ubiquitous-mode 1))
-
-(use-package amx
-  :load-path "lib/amx"
-  :config (amx-mode))
 
 (use-package deadgrep
   :load-path "lib/deadgrep"
