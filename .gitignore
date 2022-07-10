@@ -43,5 +43,6 @@ projectile.cache
 .cache/
 url/
 server/
+history
 
 ido.last

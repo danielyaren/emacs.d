@@ -251,6 +251,22 @@ point reaches the beginning or end of the buffer, stop there."
   (other-window -1)
   (delete-window))
 
+(defun crm-indicator (args)
+  (cons (format "[CRM%s] %s"
+                (replace-regexp-in-string
+                 "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                 crm-separator)
+                (car args))
+        (cdr args)))
+
+(advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+(setq-default enable-recursive-minibuffers t
+              minibuffer-prompt-properties
+              '(read-only t cursor-intangible t face minibuffer-prompt))
+
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
 ;; Font size
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
@@ -495,5 +511,20 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package deadgrep
   :load-path "lib/deadgrep"
   :bind ("C-;" . deadgrep))
+
+(use-package vertico
+  :load-path "lib/vertico"
+  :config (vertico-mode)
+  (setq-default vertico-resize t
+                vertico-cycle t))
+
+(use-package savehist
+  :config (savehist-mode))
+
+(use-package orderless
+  :load-path "lib/orderless"
+  :custom (setq-default completion-styles '(orderless basic)
+                        completion-category-defaults nil
+                        completion-category-overrides '((file (styles partial-completion)))))
 
 ;;; init.el ends here

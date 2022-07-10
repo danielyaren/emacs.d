@@ -37,3 +37,9 @@
 [submodule "lib/spinner"]
 	path = lib/spinner
 	url = https://github.com/Malabarba/spinner.el.git
+[submodule "lib/vertico"]
+	path = lib/vertico
+	url = https://github.com/minad/vertico
+[submodule "lib/orderless"]
+	path = lib/orderless
+	url = https://github.com/oantolin/orderless
