@@ -43,3 +43,9 @@
 [submodule "lib/orderless"]
 	path = lib/orderless
 	url = https://github.com/oantolin/orderless
+[submodule "lib/consult"]
+	path = lib/consult
+	url = https://github.com/minad/consult
+[submodule "lib/compat"]
+	path = lib/compat
+	url = https://github.com/phikal/compat.el

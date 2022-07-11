@@ -231,7 +231,7 @@ the beginning of the line.
 If ARG is not nil or 1, move forward ARG - 1 lines first.  If
 point reaches the beginning or end of the buffer, stop there."
   (interactive "^p")
-  (setq arg (or arg 1))
+  (setq-default arg (or arg 1))
 
   ;; Move lines first
   (when (/= arg 1)
@@ -448,6 +448,10 @@ point reaches the beginning or end of the buffer, stop there."
   (set-face-attribute 'fixed-pitch nil :font "Monaco-12.0")
   (set-face-attribute 'variable-pitch nil :font "Helvetica Neue-14.0"))
 
+(use-package compat
+  :load-path "lib/compat"
+  :defer)
+
 (use-package s
   :load-path "lib/s"
   :defer)
@@ -508,14 +512,13 @@ point reaches the beginning or end of the buffer, stop there."
   :bind (("C-x j" . find-file-in-project)
          ("C-x J" . find-file-in-current-directory)))
 
-(use-package deadgrep
-  :load-path "lib/deadgrep"
-  :bind ("C-;" . deadgrep))
-
 (use-package vertico
   :load-path "lib/vertico"
-  :config (vertico-mode)
-  (setq-default vertico-resize t
+  :hook (after-init . vertico-mode)
+  :config
+  (setq-default vertico-resize nil
+                vertico-count 17
+                vertico-resize t
                 vertico-cycle t))
 
 (use-package savehist
@@ -525,6 +528,71 @@ point reaches the beginning or end of the buffer, stop there."
   :load-path "lib/orderless"
   :custom (setq-default completion-styles '(orderless basic)
                         completion-category-defaults nil
-                        completion-category-overrides '((file (styles partial-completion)))))
+                        completion-category-overrides '((file (styles partial-completion)))
+                        orderless-component-separator "[ &]"))
+
+(use-package consult
+  :load-path "lib/consult"
+  :bind (("C-c h" . consult-history)
+         ("C-c m" . consult-mode-command)
+         ("C-c k" . consult-kmacro)
+         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
+         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+         ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
+         ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
+         ("M-#" . consult-register-load)
+         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+         ("C-M-#" . consult-register)
+         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+         ("<help> a" . consult-apropos)            ;; orig. apropos-command
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+         ("M-g g" . consult-goto-line)             ;; orig. goto-line
+         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
+         ("M-s d" . consult-find)
+         ("M-s D" . consult-locate)
+         ("M-s g" . consult-grep)
+         ("M-s G" . consult-git-grep)
+         ("M-s r" . consult-ripgrep)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
+         ("M-s m" . consult-multi-occur)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
+         ("M-s e" . consult-isearch-history)
+         :map isearch-mode-map
+         ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
+         ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
+         ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
+         ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
+         :map minibuffer-local-map
+         ("M-s" . consult-history)                 ;; orig. next-matching-history-element
+         ("M-r" . consult-history))                ;; orig. previous-matching-history-element
+  :hook (completion-list-mode . consult-preview-at-point-mode)
+  :init
+  (advice-add #'register-preview :override #'consult-register-window)
+  (setq-default xref-show-xrefs-function #'consult-xref
+                xref-show-definitions-function #'consult-xref
+                register-preview-function #'consult-register-format
+                register-preview-delay 0.5)
+  (use-package consult-xref
+    :load-path "lib/consult")
+  :config
+  (consult-customize
+   consult-theme
+   :preview-key '(:debounce 0.2 any)
+   consult-ripgrep consult-git-grep consult-grep
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-bookmark consult--source-recent-file
+   consult--source-project-recent-file
+   :preview-key (kbd "M-."))
+  (setq-default consult-narrow-key "<"))
 
 ;;; init.el ends here
