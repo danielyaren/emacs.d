@@ -1,6 +1,6 @@
 [submodule "lib/use-package"]
 	path = lib/use-package
-	url = https://github.com/jwiegley/use-package
+	url = https://github.com/danielyaren/use-package
 [submodule "lib/s"]
 	path = lib/s
 	url = https://github.com/magnars/s.el
@@ -19,9 +19,6 @@
 [submodule "lib/ace-window"]
 	path = lib/ace-window
 	url = https://github.com/abo-abo/ace-window
-[submodule "lib/find-file-in-project"]
-	path = lib/find-file-in-project
-	url = https://github.com/redguardtoo/find-file-in-project
 [submodule "lib/which-key"]
 	path = lib/which-key
 	url = https://github.com/justbur/emacs-which-key
@@ -31,21 +28,6 @@
 [submodule "lib/transient"]
 	path = lib/transient
 	url = https://github.com/magit/transient
-[submodule "lib/deadgrep"]
-	path = lib/deadgrep
-	url = https://github.com/Wilfred/deadgrep.git
 [submodule "lib/spinner"]
 	path = lib/spinner
 	url = https://github.com/Malabarba/spinner.el.git
-[submodule "lib/vertico"]
-	path = lib/vertico
-	url = https://github.com/minad/vertico
-[submodule "lib/orderless"]
-	path = lib/orderless
-	url = https://github.com/oantolin/orderless
-[submodule "lib/consult"]
-	path = lib/consult
-	url = https://github.com/minad/consult
-[submodule "lib/compat"]
-	path = lib/compat
-	url = https://github.com/phikal/compat.el

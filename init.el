@@ -27,7 +27,6 @@
   "The path to the .emacs.d directory. Must end with a slash.")
 
 (push (concat emacs-dir "lib/use-package/") load-path)
-(push (concat emacs-dir "themes/") custom-theme-load-path)
 
 (eval-when-compile
   (require 'use-package))
@@ -325,9 +324,6 @@ point reaches the beginning or end of the buffer, stop there."
 (global-unset-key "\C-z")
 (global-unset-key "\C-x\C-z")
 
-;; Toggle Modus themes.
-(global-set-key (kbd "C-.") #'theme/toggle)
-
 (with-eval-after-load 'org
   (setq-default org-log-done t
                 org-startup-with-inline-images t
@@ -348,18 +344,6 @@ point reaches the beginning or end of the buffer, stop there."
           (lambda ()
             (variable-pitch-mode 1)
             (visual-line-mode 1)))
-
-(load-theme 'modus-vivendi t)
-
-(defun theme/toggle ()
-  "Toggle between `modus-operandi' and `modus-vivendi' themes."
-  (interactive)
-  (if (eq (car custom-enabled-themes) 'modus-operandi)
-      (progn
-        (disable-theme 'modus-operandi)
-        (load-theme 'modus-vivendi t))
-    (disable-theme 'modus-vivendi)
-    (load-theme 'modus-operandi t)))
 
 ;; Colorize compilation.
 (when (require 'ansi-color nil t)
@@ -448,10 +432,6 @@ point reaches the beginning or end of the buffer, stop there."
   (set-face-attribute 'fixed-pitch nil :font "Monaco-12.0")
   (set-face-attribute 'variable-pitch nil :font "Helvetica Neue-14.0"))
 
-(use-package compat
-  :load-path "lib/compat"
-  :defer)
-
 (use-package s
   :load-path "lib/s"
   :defer)
@@ -505,94 +485,5 @@ point reaches the beginning or end of the buffer, stop there."
               ("C-c C-b" . eval-buffer)
               ("C-c C-c" . eval-defun)
               ("C-c C-e" . ielm)))
-
-(use-package find-file-in-project
-  :load-path "lib/find-file-in-project"
-  :config (setq-default ffip-use-rust-fd t)
-  :bind (("C-x j" . find-file-in-project)
-         ("C-x J" . find-file-in-current-directory)))
-
-(use-package vertico
-  :load-path "lib/vertico"
-  :hook (after-init . vertico-mode)
-  :config
-  (setq-default vertico-resize nil
-                vertico-count 17
-                vertico-resize t
-                vertico-cycle t))
-
-(use-package savehist
-  :config (savehist-mode))
-
-(use-package orderless
-  :load-path "lib/orderless"
-  :custom (setq-default completion-styles '(orderless basic)
-                        completion-category-defaults nil
-                        completion-category-overrides '((file (styles partial-completion)))
-                        orderless-component-separator "[ &]"))
-
-(use-package consult
-  :load-path "lib/consult"
-  :bind (("C-c h" . consult-history)
-         ("C-c m" . consult-mode-command)
-         ("C-c k" . consult-kmacro)
-         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
-         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
-         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-         ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
-         ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
-         ("M-#" . consult-register-load)
-         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
-         ("C-M-#" . consult-register)
-         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
-         ("<help> a" . consult-apropos)            ;; orig. apropos-command
-         ("M-g e" . consult-compile-error)
-         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
-         ("M-g g" . consult-goto-line)             ;; orig. goto-line
-         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
-         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
-         ("M-g m" . consult-mark)
-         ("M-g k" . consult-global-mark)
-         ("M-g i" . consult-imenu)
-         ("M-g I" . consult-imenu-multi)
-         ("M-s d" . consult-find)
-         ("M-s D" . consult-locate)
-         ("M-s g" . consult-grep)
-         ("M-s G" . consult-git-grep)
-         ("M-s r" . consult-ripgrep)
-         ("M-s l" . consult-line)
-         ("M-s L" . consult-line-multi)
-         ("M-s m" . consult-multi-occur)
-         ("M-s k" . consult-keep-lines)
-         ("M-s u" . consult-focus-lines)
-         ("M-s e" . consult-isearch-history)
-         :map isearch-mode-map
-         ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
-         ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
-         ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
-         ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
-         :map minibuffer-local-map
-         ("M-s" . consult-history)                 ;; orig. next-matching-history-element
-         ("M-r" . consult-history))                ;; orig. previous-matching-history-element
-  :hook (completion-list-mode . consult-preview-at-point-mode)
-  :init
-  (advice-add #'register-preview :override #'consult-register-window)
-  (setq-default xref-show-xrefs-function #'consult-xref
-                xref-show-definitions-function #'consult-xref
-                register-preview-function #'consult-register-format
-                register-preview-delay 0.5)
-  (use-package consult-xref
-    :load-path "lib/consult")
-  :config
-  (consult-customize
-   consult-theme
-   :preview-key '(:debounce 0.2 any)
-   consult-ripgrep consult-git-grep consult-grep
-   consult-bookmark consult-recent-file consult-xref
-   consult--source-bookmark consult--source-recent-file
-   consult--source-project-recent-file
-   :preview-key (kbd "M-."))
-  (setq-default consult-narrow-key "<"))
 
 ;;; init.el ends here

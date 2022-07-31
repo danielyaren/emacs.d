@@ -6,6 +6,7 @@ modules/private
 .cask/
 cask/
 elpa/
+eln-cache/
 
 org-roam.db
 
