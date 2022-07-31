@@ -12,7 +12,3 @@ git clone https://github.com/danielyaren/emacs.d.git .emacs.d
 cd .emacs.d
 git submodule update --init --recursive
 #+end_src
-
-* External Dependencies
-
-This emacs requires [[https://github.com/sharkdp/fd][fd]] (for [[https://github.com/technomancy/find-file-in-project][find-file-in-project]]) and [[https://github.com/BurntSushi/ripgrep][ripgrep]] (for [[https://github.com/Wilfred/deadgrep][deadgrep]], [[https://github.com/abo-abo/swiper][counsel-rg]])
