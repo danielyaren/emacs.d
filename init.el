@@ -400,7 +400,6 @@ point reaches the beginning or end of the buffer, stop there."
 (unless (eq system-type 'darwin) (setq-default command-line-ns-option-alist nil))
 (unless (eq system-type 'gnu/linux) (setq-default command-line-x-option-alist nil))
 
-
 ;; Windows specific settings.
 (when (eq system-type 'windows-nt)
   (let ((frame-options '(
