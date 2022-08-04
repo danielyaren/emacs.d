@@ -400,11 +400,12 @@ point reaches the beginning or end of the buffer, stop there."
 (unless (eq system-type 'darwin) (setq-default command-line-ns-option-alist nil))
 (unless (eq system-type 'gnu/linux) (setq-default command-line-x-option-alist nil))
 
+
 ;; Windows specific settings.
 (when (eq system-type 'windows-nt)
   (let ((frame-options '(
-                         (width . 200)
-                         (height . 50)
+                         (width . 180)
+                         (height . 40)
                          (left . 50)
                          (top . 50))))
     (setq-default initial-frame-alist frame-options)
@@ -412,9 +413,9 @@ point reaches the beginning or end of the buffer, stop there."
   (setq-default w32-get-true-file-attributes nil
 		            inhibit-compacting-font-caches t
 		            abbreviated-home-dir "\\`'")
-  (set-face-attribute 'default nil :font "Consolas-10.0")
-  (set-face-attribute 'fixed-pitch nil :font "Consolas-10.0")
-  (set-face-attribute 'variable-pitch nil :font "Constantia-14.0"))
+  (set-face-attribute 'default nil :font "Cascadia Code-12.0")
+  (set-face-attribute 'fixed-pitch nil :font "Cascadia Code-12.0")
+  (set-face-attribute 'variable-pitch nil :font "Constantia-16.0"))
 
 ;; macOS specific settings.
 (when (eq system-type 'darwin)
