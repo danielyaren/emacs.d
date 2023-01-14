@@ -495,11 +495,12 @@ point reaches the beginning or end of the buffer, stop there."
     :load-path "lib/deft"
     :bind (("C-c n d" . deft)
            ("C-c n f" . deft-find-file))
-    :custom
-    (deft-recursive t)
-    (deft-use-filter-string-for-filename t)
-    (deft-default-extension "org")
-    (deft-directory org-dir))
+    :init (setq-default
+           deft-text-mode 'org-mode
+           deft-extensions '("org")
+           deft-recursive t
+           deft-use-filter-string-for-filename t
+           deft-directory org-dir))
   (use-package git-auto-commit-mode
     :load-path "lib/git-auto-commit-mode"
     :config (setq-default gac-automatically-push-p t
