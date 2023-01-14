@@ -42,6 +42,9 @@
 ;; Make apropos omnipotent.
 (defvar apropos-do-all t)
 
+;; Org-dir for notes.
+(defvar org-dir)
+
 ;; Don't make a second case-insensitive pass over `auto-mode-alist'.
 (setq-default auto-mode-case-fold nil)
 
@@ -430,7 +433,8 @@ point reaches the beginning or end of the buffer, stop there."
     (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
   (set-face-attribute 'default nil :font "Monaco-12.0")
   (set-face-attribute 'fixed-pitch nil :font "Monaco-12.0")
-  (set-face-attribute 'variable-pitch nil :font "Helvetica Neue-14.0"))
+  (set-face-attribute 'variable-pitch nil :font "Helvetica Neue-14.0")
+  (setq-default org-dir "~/Repos/slipbox"))
 
 (use-package s
   :load-path "lib/s"
@@ -485,5 +489,21 @@ point reaches the beginning or end of the buffer, stop there."
               ("C-c C-b" . eval-buffer)
               ("C-c C-c" . eval-defun)
               ("C-c C-e" . ielm)))
+
+(when (file-directory-p org-dir)
+  (use-package deft
+    :load-path "lib/deft"
+    :bind (("C-c n d" . deft)
+           ("C-c n f" . deft-find-file))
+    :custom
+    (deft-recursive t)
+    (deft-use-filter-string-for-filename t)
+    (deft-default-extension "org")
+    (deft-directory org-dir))
+  (use-package git-auto-commit-mode
+    :load-path "lib/git-auto-commit-mode"
+    :config (setq-default gac-automatically-push-p t
+                          gac-automatically-add-new-files-p t
+                          gac-debounce-interval 10)))
 
 ;;; init.el ends here

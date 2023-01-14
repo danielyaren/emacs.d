@@ -31,3 +31,9 @@
 [submodule "lib/spinner"]
 	path = lib/spinner
 	url = https://github.com/Malabarba/spinner.el.git
+[submodule "lib/deft"]
+	path = lib/deft
+	url = https://github.com/jrblevin/deft
+[submodule "lib/git-auto-commit-mode"]
+	path = lib/git-auto-commit-mode
+	url = https://github.com/ryuslash/git-auto-commit-mode
