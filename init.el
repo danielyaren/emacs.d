@@ -461,6 +461,31 @@ Point stays in the upper window."
 (use-package which-key
   :hook (emacs-startup . which-key-mode))
 
+(use-package vertico
+  :load-path "lib/vertico"
+  :hook (emacs-startup . vertico-mode))
+
+(use-package marginalia
+  :load-path "lib/marginalia"
+  :hook (emacs-startup . marginalia-mode))
+
+(use-package orderless
+  :load-path "lib/orderless"
+  :demand t
+  :config
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+
+(use-package consult
+  :load-path "lib/consult"
+  :bind (("C-x b" . consult-buffer)
+         ("M-y" . consult-yank-pop)
+         ("M-g g" . consult-goto-line)
+         ("M-g i" . consult-imenu)
+         ("M-s l" . consult-line)
+         ("M-s g" . consult-ripgrep)))
+
 (use-package async
   :load-path "lib/emacs-async"
   :defer

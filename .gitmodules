@@ -46,3 +46,15 @@
 [submodule "lib/llama"]
 	path = lib/llama
 	url = https://github.com/tarsius/llama
+[submodule "lib/vertico"]
+	path = lib/vertico
+	url = https://github.com/minad/vertico
+[submodule "lib/marginalia"]
+	path = lib/marginalia
+	url = https://github.com/minad/marginalia
+[submodule "lib/orderless"]
+	path = lib/orderless
+	url = https://github.com/oantolin/orderless
+[submodule "lib/consult"]
+	path = lib/consult
+	url = https://github.com/minad/consult
