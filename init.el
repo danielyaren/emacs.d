@@ -30,10 +30,10 @@
 ;; In noninteractive sessions, prioritize non-byte-compiled source files to
 ;; prevent the use of stale byte-code. Otherwise, it saves us a little IO time
 ;; to skip the mtime checks on every *.elc file we load.
-(setq-default load-prefer-newer noninteractive)
+(setq load-prefer-newer noninteractive)
 
 ;; Disable warnings from legacy advice system,
-(setq-default ad-redefinition-action 'accept)
+(setq ad-redefinition-action 'accept)
 
 ;; Make apropos omnipotent.
 (defvar apropos-do-all t)
@@ -42,7 +42,7 @@
 (defvar org-dir nil)
 
 ;; Don't make a second case-insensitive pass over `auto-mode-alist'.
-(setq-default auto-mode-case-fold nil)
+(setq auto-mode-case-fold nil)
 
 ;; Disable bidirectional text rendering for a modest performance boost. Of
 ;; course, this renders Emacs unable to detect/display right-to-left languages
@@ -51,37 +51,35 @@
 (setq bidi-inhibit-bpa t)
 
 ;; Don't ping things that look like domain names.
-(setq-default ffap-machine-p-known 'reject)
+(setq ffap-machine-p-known 'reject)
 
 ;; Resolve symlinks when opening files, so that any operations are conducted
 ;; from the file's true directory (like `find-file').
-(setq-default find-file-visit-truename t)
+(setq find-file-visit-truename t)
 
 ;; Compilation mode tweaks.
-(setq-default compilation-always-kill t
-              compilation-ask-about-save nil)
+(setq compilation-always-kill t
+      compilation-ask-about-save nil)
 
 ;; Try to keep things organised.
-(setq-default backup-directory-alist '(("." . "~/.emacs-saves")))
-(setq-default save-place-file "~/.emacs-save-place")
+(setq backup-directory-alist '(("." . "~/.emacs-saves")))
+(setq save-place-file "~/.emacs-save-place")
 (save-place-mode 1)
 
-(autoload 'dired-jump "dired-x" t)
-
 (with-eval-after-load 'dired
-  (setq-default dired-listing-switches "-alh"
-                dired-recursive-copies 'always
-                dired-recursive-deletes 'always)
+  (setq dired-listing-switches "-alh"
+        dired-recursive-copies 'always
+        dired-recursive-deletes 'always)
   (add-hook 'dired-mode-hook 'auto-revert-mode))
 
 (with-eval-after-load 'dired-x
-  (setq-default dired-omit-extensions nil))
+  (setq dired-omit-extensions nil))
 
 ;; Modern editor behavior.
 (delete-selection-mode 1)
 
 ;; Middle-click paste at location.
-(setq-default mouse-yank-at-point t)
+(setq mouse-yank-at-point t)
 
 ;; Automatically update a buffer.
 (global-auto-revert-mode 1)
@@ -89,24 +87,24 @@
 ;; Eliminate duplicates in the kill ring. That is, if you kill the
 ;; same thing twice, you won't have to use M-y twice to get past it
 ;; to older entries in the kill ring.
-(setq-default kill-do-not-save-duplicates t)
+(setq kill-do-not-save-duplicates t)
 
 ;; Some editing visuals.
-(setq-default blink-matching-paren nil
-              visible-cursor nil
-              x-stretch-cursor nil)
+(setq blink-matching-paren nil
+      visible-cursor nil
+      x-stretch-cursor nil)
 
 ;; Smoother scrolling.
-(setq-default scroll-margin 1
-              scroll-step 1
-              scroll-conservatively 10000
-              scroll-preserve-screen-position 1)
+(setq scroll-margin 1
+      scroll-step 1
+      scroll-conservatively 10000
+      scroll-preserve-screen-position 1)
 
 ;; Nicer line spacing.
 (setq-default line-spacing 3)
 
 ;; Whether to add a newline.
-(setq-default mode-require-final-newline nil)
+(setq mode-require-final-newline nil)
 
 ;; Obviously
 (setq-default sentence-end-double-space nil)
@@ -122,9 +120,9 @@
               fill-column 80)
 
 (setq-default sentence-end-double-space nil
-      delete-trailing-lines nil
-      require-final-newline t
-      tabify-regexp "^\t* [ \t]+")
+              delete-trailing-lines nil
+              require-final-newline t
+              tabify-regexp "^\t* [ \t]+")
 
 ;; Mode to trigger indentation.
 (electric-indent-mode +1)
@@ -140,20 +138,20 @@
 (global-so-long-mode +1)
 
 ;; More performant rapid scrolling over unfontified regions.
-(setq-default fast-but-imprecise-scrolling t)
+(setq fast-but-imprecise-scrolling t)
 
 (with-eval-after-load 'eshell
-  (setq-default eshell-scroll-to-bottom-on-input 'all
-                eshell-scroll-to-bottom-on-output 'all
-                eshell-buffer-shorthand t
-                eshell-kill-processes-on-exit t
-                eshell-hist-ignoredups t
-                eshell-input-filter (lambda (input) (not (string-match-p "\\`\\s-+" input)))
-                eshell-glob-case-insensitive t
-                eshell-error-if-no-glob t
-                eshell-where-to-jump 'begin
-                eshell-review-quick-commands nil
-                eshell-smart-spaces-goes-to-end t)
+  (setq eshell-scroll-to-bottom-on-input 'all
+        eshell-scroll-to-bottom-on-output 'all
+        eshell-buffer-shorthand t
+        eshell-kill-processes-on-exit t
+        eshell-hist-ignoredups t
+        eshell-input-filter (lambda (input) (not (string-match-p "\\`\\s-+" input)))
+        eshell-glob-case-insensitive t
+        eshell-error-if-no-glob t
+        eshell-where-to-jump 'begin
+        eshell-review-quick-commands nil
+        eshell-smart-spaces-goes-to-end t)
   (add-hook 'eshell-preoutput-filter-functions 'ansi-color-filter-apply)
   (add-hook 'eshell-preoutput-filter-functions 'ansi-color-apply))
 
@@ -240,12 +238,9 @@ point reaches the beginning or end of the buffer, stop there."
       (move-beginning-of-line 1))))
 
 (defun quarter-window-vertically ()
-  "Create a new window a quarter size of the current window."
-  (split-window-vertically)
-  (other-window 1)
-  (split-window-vertically)
-  (other-window -1)
-  (delete-window))
+  "Split the current window, leaving a quarter-height window at the bottom.
+Point stays in the upper window."
+  (split-window-below (- (/ (window-total-height) 4))))
 
 (defun crm-indicator (args)
   (cons (format "[CRM%s] %s"
@@ -257,9 +252,9 @@ point reaches the beginning or end of the buffer, stop there."
 
 (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
 
-(setq-default enable-recursive-minibuffers t
-              minibuffer-prompt-properties
-              '(read-only t cursor-intangible t face minibuffer-prompt))
+(setq enable-recursive-minibuffers t
+      minibuffer-prompt-properties
+      '(read-only t cursor-intangible t face minibuffer-prompt))
 
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
@@ -322,20 +317,20 @@ point reaches the beginning or end of the buffer, stop there."
 (global-unset-key "\C-x\C-z")
 
 (with-eval-after-load 'org
-  (setq-default org-log-done t
-                org-startup-with-inline-images t
-                org-startup-indented t
-                org-pretty-entities t
-                org-hide-emphasis-markers t
-                org-fontify-whole-heading-line t
-                org-fontify-done-headline t
-                org-fontify-quote-and-verse-blocks t
-                org-image-actual-width nil
-                org-startup-folded nil
-                org-todo-keyword-faces
-                '(("TODO" . org-warning)
-                  ("STARTED" . "yellow")
-                  ("CANCELLED" . (:foreground "blue" :weight bold)))))
+  (setq org-log-done t
+        org-startup-with-inline-images t
+        org-startup-indented t
+        org-pretty-entities t
+        org-hide-emphasis-markers t
+        org-fontify-whole-heading-line t
+        org-fontify-done-headline t
+        org-fontify-quote-and-verse-blocks t
+        org-image-actual-width nil
+        org-startup-folded nil
+        org-todo-keyword-faces
+        '(("TODO" . org-warning)
+          ("STARTED" . "yellow")
+          ("CANCELLED" . (:foreground "blue" :weight bold)))))
 
 (add-hook 'org-mode-hook
           (lambda ()
@@ -346,11 +341,11 @@ point reaches the beginning or end of the buffer, stop there."
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
 ;; Display the bare minimum at startup.
-(setq-default inhibit-startup-message t
-              inhibit-startup-echo-area-message user-login-name
-              inhibit-default-init t
-              initial-major-mode 'fundamental-mode
-              initial-scratch-message nil)
+(setq inhibit-startup-message t
+      inhibit-startup-echo-area-message user-login-name
+      inhibit-default-init t
+      initial-major-mode 'fundamental-mode
+      initial-scratch-message nil)
 
 (fset #'display-startup-echo-area-message #'ignore)
 
@@ -359,26 +354,26 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; Disable the warning "X and Y are the same file". It's fine to ignore this
 ;; warning as it will redirect you to the existing buffer anyway.
-(setq-default find-file-suppress-same-file-warnings t)
+(setq find-file-suppress-same-file-warnings t)
 
 ;; Make Emacs flash instead of beeping an error.
-(setq-default visible-bell t)
+(setq visible-bell t)
 
 ;; Emacs "updates" its ui more often than it needs to, so we slow it down
 ;; slightly, from 0.5s:
-(setq-default idle-update-delay 1)
+(setq idle-update-delay 1)
 
 ;; How much time should elapse before command characters echo
-(setq-default echo-keystrokes 0.02)
+(setq echo-keystrokes 0.02)
 
 ;; Resize windows/frames in units of pixels
-(setq-default window-resize-pixelwise t
+(setq window-resize-pixelwise t
       frame-resize-pixelwise t)
 
 ;; Window Divider widths.
-(setq-default window-divider-default-places t
-              window-divider-default-bottom-width 1
-              window-divider-default-right-width 1)
+(setq window-divider-default-places t
+      window-divider-default-bottom-width 1
+      window-divider-default-right-width 1)
 
 ;; Empty the frame title.
 (setq-default frame-title-format "%f")
@@ -386,12 +381,12 @@ point reaches the beginning or end of the buffer, stop there."
 ;; Reduce rendering/line scan work for Emacs by not rendering cursors or regions
 ;; in non-focused windows.
 (setq-default cursor-in-non-selected-windows nil)
-(setq-default highlight-nonselected-windows nil)
+(setq highlight-nonselected-windows nil)
 
 ;; Remove command line options that aren't relevant to our current OS; that
 ;; means less to process at startup.
-(unless (eq system-type 'darwin) (setq-default command-line-ns-option-alist nil))
-(unless (eq system-type 'gnu/linux) (setq-default command-line-x-option-alist nil))
+(unless (eq system-type 'darwin) (setq command-line-ns-option-alist nil))
+(unless (eq system-type 'gnu/linux) (setq command-line-x-option-alist nil))
 
 ;; Windows specific settings.
 (when (eq system-type 'windows-nt)
@@ -400,11 +395,11 @@ point reaches the beginning or end of the buffer, stop there."
                          (height . 40)
                          (left . 50)
                          (top . 50))))
-    (setq-default initial-frame-alist frame-options)
-    (setq-default default-frame-alist frame-options))
-  (setq-default w32-get-true-file-attributes nil
-		            inhibit-compacting-font-caches t
-		            abbreviated-home-dir "\\`'")
+    (setq initial-frame-alist frame-options)
+    (setq default-frame-alist frame-options))
+  (setq w32-get-true-file-attributes nil
+        inhibit-compacting-font-caches t
+        abbreviated-home-dir "\\`'")
   (set-face-attribute 'default nil :font "Cascadia Code-12.0")
   (set-face-attribute 'fixed-pitch nil :font "Cascadia Code-12.0")
   (set-face-attribute 'variable-pitch nil :font "Constantia-16.0"))
@@ -416,15 +411,15 @@ point reaches the beginning or end of the buffer, stop there."
                          (height . 50)
                          (left . 100)
                          (top . 50))))
-    (setq-default initial-frame-alist frame-options)
-    (setq-default default-frame-alist frame-options))  
+    (setq initial-frame-alist frame-options)
+    (setq default-frame-alist frame-options))
   (menu-bar-mode +1)
   (when (fboundp 'set-fontset-font)
     (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
   (set-face-attribute 'default nil :font "Monaco-12.0")
   (set-face-attribute 'fixed-pitch nil :font "Monaco-12.0")
   (set-face-attribute 'variable-pitch nil :font "Helvetica Neue-14.0")
-  (setq-default org-dir "~/Repos/slipbox"))
+  (setq org-dir "~/Repos/slipbox"))
 
 (use-package s
   :load-path "lib/s"
@@ -460,7 +455,7 @@ point reaches the beginning or end of the buffer, stop there."
 
 (use-package avy
   :load-path "lib/avy"
-  :config (setq-default avy-timeout-seconds 0.3)
+  :config (setq avy-timeout-seconds 0.3)
   :bind (("C-:" . avy-goto-char-timer)
          ("M-g w" . avy-goto-word-1)
          ("M-g M-l" . avy-goto-line)))
@@ -468,11 +463,11 @@ point reaches the beginning or end of the buffer, stop there."
 (use-package ace-window
   :load-path "lib/ace-window"
   :commands ace-swap-window
-  :config (setq-default aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  :config (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
   :bind ("C-x o" . ace-window))
 
 (use-package emacs-lisp-mode
-  :mode "\\.el\\'"
+  :no-require t
   :bind (:map emacs-lisp-mode-map
               ("C-c C-b" . eval-buffer)
               ("C-c C-c" . eval-defun)
@@ -483,17 +478,16 @@ point reaches the beginning or end of the buffer, stop there."
     :load-path "lib/deft"
     :bind (("C-c n d" . deft)
            ("C-c n f" . deft-find-file))
-    :init (setq-default
-           deft-text-mode 'org-mode
-           deft-extensions '("org")
-           deft-recursive t
-           deft-use-filter-string-for-filename t
-           deft-directory org-dir))
+    :init (setq deft-text-mode 'org-mode
+                deft-extensions '("org")
+                deft-recursive t
+                deft-use-filter-string-for-filename t
+                deft-directory org-dir))
   (use-package git-auto-commit-mode
     :load-path "lib/git-auto-commit-mode"
-    :config (setq-default gac-automatically-push-p t
-                          gac-automatically-add-new-files-p t
-                          gac-debounce-interval 10)))
+    :config (setq gac-automatically-push-p t
+                  gac-automatically-add-new-files-p t
+                  gac-debounce-interval 10)))
 
 ;; Restore the values we deferred in early-init.el for startup speed.
 (add-hook 'emacs-startup-hook
