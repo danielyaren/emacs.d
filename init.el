@@ -26,10 +26,6 @@
   (eval-when-compile (file-truename user-emacs-directory))
   "The path to the .emacs.d directory. Must end with a slash.")
 
-(push (concat emacs-dir "lib/use-package/") load-path)
-
-(eval-when-compile
-  (require 'use-package))
 
 ;; In noninteractive sessions, prioritize non-byte-compiled source files to
 ;; prevent the use of stale byte-code. Otherwise, it saves us a little IO time
@@ -453,7 +449,6 @@ point reaches the beginning or end of the buffer, stop there."
   :defer)
 
 (use-package transient
-  :load-path "lib/transient/lisp"
   :defer)
 
 (use-package spinner
@@ -461,7 +456,6 @@ point reaches the beginning or end of the buffer, stop there."
   :defer)
 
 (use-package which-key
-  :load-path "lib/which-key"
   :hook (emacs-startup . which-key-mode))
 
 (use-package async

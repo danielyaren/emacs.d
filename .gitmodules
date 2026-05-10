@@ -1,6 +1,3 @@
-[submodule "lib/use-package"]
-	path = lib/use-package
-	url = https://github.com/danielyaren/use-package
 [submodule "lib/s"]
 	path = lib/s
 	url = https://github.com/magnars/s.el
@@ -19,15 +16,9 @@
 [submodule "lib/ace-window"]
 	path = lib/ace-window
 	url = https://github.com/abo-abo/ace-window
-[submodule "lib/which-key"]
-	path = lib/which-key
-	url = https://github.com/justbur/emacs-which-key
 [submodule "lib/wgrep"]
 	path = lib/wgrep
 	url = https://github.com/mhayashi1120/Emacs-wgrep
-[submodule "lib/transient"]
-	path = lib/transient
-	url = https://github.com/magit/transient
 [submodule "lib/spinner"]
 	path = lib/spinner
 	url = https://github.com/Malabarba/spinner.el.git
