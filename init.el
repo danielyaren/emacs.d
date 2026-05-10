@@ -434,7 +434,24 @@ Point stays in the upper window."
   :load-path "lib/wgrep"
   :defer)
 
+(use-package compat
+  :load-path "lib/compat"
+  :defer)
+
+(use-package cond-let
+  :load-path "lib/cond-let"
+  :defer)
+
+(use-package llama
+  :load-path "lib/llama"
+  :defer)
+
 (use-package transient
+  :load-path "lib/transient/lisp"
+  :defer)
+
+(use-package with-editor
+  :load-path "lib/with-editor/lisp"
   :defer)
 
 (use-package spinner
@@ -462,6 +479,11 @@ Point stays in the upper window."
   :commands ace-swap-window
   :config (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
   :bind ("C-x o" . ace-window))
+
+(use-package magit
+  :load-path "lib/magit/lisp"
+  :bind (("C-x g" . magit-status)
+         ("C-x M-g" . magit-dispatch)))
 
 (use-package emacs-lisp-mode
   :no-require t

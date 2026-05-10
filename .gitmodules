@@ -28,3 +28,21 @@
 [submodule "lib/git-auto-commit-mode"]
 	path = lib/git-auto-commit-mode
 	url = https://github.com/ryuslash/git-auto-commit-mode
+[submodule "lib/compat"]
+	path = lib/compat
+	url = https://github.com/emacs-compat/compat
+[submodule "lib/with-editor"]
+	path = lib/with-editor
+	url = https://github.com/magit/with-editor
+[submodule "lib/transient"]
+	path = lib/transient
+	url = https://github.com/magit/transient
+[submodule "lib/magit"]
+	path = lib/magit
+	url = https://github.com/magit/magit
+[submodule "lib/cond-let"]
+	path = lib/cond-let
+	url = https://github.com/tarsius/cond-let
+[submodule "lib/llama"]
+	path = lib/llama
+	url = https://github.com/tarsius/llama
