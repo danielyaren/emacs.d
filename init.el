@@ -39,7 +39,7 @@
 (defvar apropos-do-all t)
 
 ;; Org-dir for notes.
-(defvar org-dir)
+(defvar org-dir nil)
 
 ;; Don't make a second case-insensitive pass over `auto-mode-alist'.
 (setq-default auto-mode-case-fold nil)
@@ -47,10 +47,8 @@
 ;; Disable bidirectional text rendering for a modest performance boost. Of
 ;; course, this renders Emacs unable to detect/display right-to-left languages
 ;; (sorry!), but for us left-to-right language speakers/writers, it's a boon.
-(setq-default bidi-display-reordering 'left-to-right)
-
-;; This is consulted on every `require', `load' and various path/io functions.
-(setq-default file-name-handler-alist nil)
+(setq-default bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
 
 ;; Don't ping things that look like domain names.
 (setq-default ffap-machine-p-known 'reject)
@@ -204,7 +202,7 @@
   (when (yes-or-no-p (format "Really delete '%s'?"
                              (file-name-nondirectory buffer-file-name)))
     (delete-file (buffer-file-name))
-    (kill-this-buffer)))
+    (kill-buffer (current-buffer))))
 
 (defun browse-file-directory ()
   "Open the current file's directory however the OS would."
@@ -229,7 +227,7 @@ the beginning of the line.
 If ARG is not nil or 1, move forward ARG - 1 lines first.  If
 point reaches the beginning or end of the buffer, stop there."
   (interactive "^p")
-  (setq-default arg (or arg 1))
+  (setq arg (or arg 1))
 
   ;; Move lines first
   (when (/= arg 1)
@@ -333,7 +331,7 @@ point reaches the beginning or end of the buffer, stop there."
                 org-fontify-done-headline t
                 org-fontify-quote-and-verse-blocks t
                 org-image-actual-width nil
-                org-startup-folded "showall"
+                org-startup-folded nil
                 org-todo-keyword-faces
                 '(("TODO" . org-warning)
                   ("STARTED" . "yellow")
@@ -345,11 +343,7 @@ point reaches the beginning or end of the buffer, stop there."
             (visual-line-mode 1)))
 
 ;; Colorize compilation.
-(when (require 'ansi-color nil t)
-  (defun my-colorize-compilation-buffer ()
-    (when (eq major-mode 'compilation-mode)
-      (ansi-color-apply-on-region compilation-filter-start (point-max))))
-  (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
 ;; Display the bare minimum at startup.
 (setq-default inhibit-startup-message t
@@ -361,7 +355,7 @@ point reaches the beginning or end of the buffer, stop there."
 (fset #'display-startup-echo-area-message #'ignore)
 
 ;; Enable y/n answers
-(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
 
 ;; Disable the warning "X and Y are the same file". It's fine to ignore this
 ;; warning as it will redirect you to the existing buffer anyway.
@@ -500,5 +494,11 @@ point reaches the beginning or end of the buffer, stop there."
     :config (setq-default gac-automatically-push-p t
                           gac-automatically-add-new-files-p t
                           gac-debounce-interval 10)))
+
+;; Restore the values we deferred in early-init.el for startup speed.
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold (expt 2 24)
+                  file-name-handler-alist my/file-name-handler-alist)))
 
 ;;; init.el ends here

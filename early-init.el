@@ -21,14 +21,17 @@
 
 ;;; Code:
 
-;; Defer garbage collection further back in the startup process.
-(setq-default gc-cons-threshold (expt 2 24))
+;; Defer garbage collection during startup. Restored in init.el after init.
+(setq gc-cons-threshold most-positive-fixnum)
+
+;; Skip the file-name-handler regex machinery during startup (TRAMP,
+;; archives, URL handlers). The original value is restored in init.el.
+(defvar my/file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
 
 ;; In Emacs 27+, package initialization occurs before `user-init-file' is
 ;; loaded, but after `early-init-file'.
 (setq-default package-enable-at-startup nil)
-(advice-add #'package--ensure-init-file :override #'ignore)
-
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 (setq-default tool-bar-mode nil
               menu-bar-mode nil)
@@ -49,6 +52,6 @@
 ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
 
-(load-theme 'manoj-dark)
+(load-theme 'manoj-dark t)
 
 ;;; early-init.el ends here
