@@ -32,9 +32,6 @@
 ;; to skip the mtime checks on every *.elc file we load.
 (setq load-prefer-newer noninteractive)
 
-;; Disable warnings from legacy advice system,
-(setq ad-redefinition-action 'accept)
-
 ;; Make apropos omnipotent.
 (defvar apropos-do-all t)
 
@@ -131,7 +128,7 @@
 (electric-pair-mode +1)
 
 ;; Subword mode.
-(global-subword-mode)
+(global-subword-mode 1)
 
 ;; When the lines in a buffer are so long that performance could suffer to an unacceptable degree,
 ;; we say “so long” to the buffer’s major mode
@@ -388,37 +385,37 @@ Point stays in the upper window."
 (unless (eq system-type 'darwin) (setq command-line-ns-option-alist nil))
 (unless (eq system-type 'gnu/linux) (setq command-line-x-option-alist nil))
 
+(defun setup-frame-and-fonts (width height left top default-font fixed-font variable-font)
+  "Set the initial/default frame size+position and the main font faces."
+  (let ((frame-options `((width . ,width)
+                         (height . ,height)
+                         (left . ,left)
+                         (top . ,top))))
+    (setq initial-frame-alist frame-options
+          default-frame-alist frame-options))
+  (set-face-attribute 'default nil :font default-font)
+  (set-face-attribute 'fixed-pitch nil :font fixed-font)
+  (set-face-attribute 'variable-pitch nil :font variable-font))
+
 ;; Windows specific settings.
 (when (eq system-type 'windows-nt)
-  (let ((frame-options '(
-                         (width . 180)
-                         (height . 40)
-                         (left . 50)
-                         (top . 50))))
-    (setq initial-frame-alist frame-options)
-    (setq default-frame-alist frame-options))
+  (setup-frame-and-fonts 180 40 50 50
+                         "Cascadia Code-12.0"
+                         "Cascadia Code-12.0"
+                         "Constantia-16.0")
   (setq w32-get-true-file-attributes nil
         inhibit-compacting-font-caches t
-        abbreviated-home-dir "\\`'")
-  (set-face-attribute 'default nil :font "Cascadia Code-12.0")
-  (set-face-attribute 'fixed-pitch nil :font "Cascadia Code-12.0")
-  (set-face-attribute 'variable-pitch nil :font "Constantia-16.0"))
+        abbreviated-home-dir "\\`'"))
 
 ;; macOS specific settings.
 (when (eq system-type 'darwin)
-  (let ((frame-options '(
-                         (width . 200)
-                         (height . 50)
-                         (left . 100)
-                         (top . 50))))
-    (setq initial-frame-alist frame-options)
-    (setq default-frame-alist frame-options))
+  (setup-frame-and-fonts 200 50 100 50
+                         "Monaco-12.0"
+                         "Monaco-12.0"
+                         "Helvetica Neue-14.0")
   (menu-bar-mode +1)
   (when (fboundp 'set-fontset-font)
     (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend))
-  (set-face-attribute 'default nil :font "Monaco-12.0")
-  (set-face-attribute 'fixed-pitch nil :font "Monaco-12.0")
-  (set-face-attribute 'variable-pitch nil :font "Helvetica Neue-14.0")
   (setq org-dir "~/Repos/slipbox"))
 
 (use-package s
