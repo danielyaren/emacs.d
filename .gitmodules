@@ -58,3 +58,6 @@
 [submodule "lib/consult"]
 	path = lib/consult
 	url = https://github.com/minad/consult
+[submodule "lib/corfu"]
+	path = lib/corfu
+	url = https://github.com/minad/corfu

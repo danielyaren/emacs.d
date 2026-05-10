@@ -486,6 +486,15 @@ Point stays in the upper window."
          ("M-s l" . consult-line)
          ("M-s g" . consult-ripgrep)))
 
+(use-package corfu
+  :load-path ("lib/corfu" "lib/corfu/extensions")
+  :hook (emacs-startup . global-corfu-mode)
+  :config
+  (setq corfu-auto t
+        corfu-auto-delay 0.2
+        corfu-auto-prefix 2
+        corfu-cycle t))
+
 (use-package async
   :load-path "lib/emacs-async"
   :defer
