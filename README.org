@@ -11,4 +11,19 @@ To install:
 git clone https://github.com/danielyaren/emacs.d.git .emacs.d
 cd .emacs.d
 git submodule update --init --recursive
+make compile
+#+end_src
+
+* Byte-compiling
+
+The submodules ship source only, so ~make compile~ byte-compiles the packages
+under [[https://github.com/danielyaren/emacs.d/tree/main/lib][lib]] in dependency order. Run it again after ~git submodule update~; only
+the files whose byte-code is out of date are compiled. Packages that need a
+newer Emacs than the one running are reported and left alone.
+
+#+begin_src conf
+make compile              # compile what needs it
+make recompile            # compile everything again
+make clean                # remove every .elc under lib
+make compile EMACS=...    # use another Emacs binary
 #+end_src

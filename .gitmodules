@@ -1,63 +1,84 @@
 [submodule "lib/s"]
 	path = lib/s
 	url = https://github.com/magnars/s.el
+	ignore = untracked
 [submodule "lib/dash"]
 	path = lib/dash
 	url = https://github.com/magnars/dash.el
+	ignore = untracked
 [submodule "lib/emacs-request"]
 	path = lib/emacs-request
 	url = https://github.com/tkf/emacs-request
+	ignore = untracked
 [submodule "lib/emacs-async"]
 	path = lib/emacs-async
 	url = https://github.com/jwiegley/emacs-async
+	ignore = untracked
 [submodule "lib/avy"]
 	path = lib/avy
 	url = https://github.com/abo-abo/avy
+	ignore = untracked
 [submodule "lib/ace-window"]
 	path = lib/ace-window
 	url = https://github.com/abo-abo/ace-window
+	ignore = untracked
 [submodule "lib/wgrep"]
 	path = lib/wgrep
 	url = https://github.com/mhayashi1120/Emacs-wgrep
+	ignore = untracked
 [submodule "lib/spinner"]
 	path = lib/spinner
 	url = https://github.com/Malabarba/spinner.el.git
+	ignore = untracked
 [submodule "lib/deft"]
 	path = lib/deft
 	url = https://github.com/jrblevin/deft
+	ignore = untracked
 [submodule "lib/git-auto-commit-mode"]
 	path = lib/git-auto-commit-mode
 	url = https://github.com/ryuslash/git-auto-commit-mode
+	ignore = untracked
 [submodule "lib/compat"]
 	path = lib/compat
 	url = https://github.com/emacs-compat/compat
+	ignore = untracked
 [submodule "lib/with-editor"]
 	path = lib/with-editor
 	url = https://github.com/magit/with-editor
+	ignore = untracked
 [submodule "lib/transient"]
 	path = lib/transient
 	url = https://github.com/magit/transient
+	ignore = untracked
 [submodule "lib/magit"]
 	path = lib/magit
 	url = https://github.com/magit/magit
+	ignore = untracked
 [submodule "lib/cond-let"]
 	path = lib/cond-let
 	url = https://github.com/tarsius/cond-let
+	ignore = untracked
 [submodule "lib/llama"]
 	path = lib/llama
 	url = https://github.com/tarsius/llama
+	ignore = untracked
 [submodule "lib/vertico"]
 	path = lib/vertico
 	url = https://github.com/minad/vertico
+	ignore = untracked
 [submodule "lib/marginalia"]
 	path = lib/marginalia
 	url = https://github.com/minad/marginalia
+	ignore = untracked
 [submodule "lib/orderless"]
 	path = lib/orderless
 	url = https://github.com/oantolin/orderless
+	ignore = untracked
 [submodule "lib/consult"]
 	path = lib/consult
 	url = https://github.com/minad/consult
+	ignore = untracked
 [submodule "lib/corfu"]
 	path = lib/corfu
 	url = https://github.com/minad/corfu
+	ignore = untracked
