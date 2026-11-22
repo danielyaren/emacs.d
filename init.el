@@ -451,6 +451,19 @@ Point stays in the upper window."
   :load-path "lib/with-editor/lisp"
   :defer)
 
+(use-package modus-themes
+  :load-path "lib/modus-themes"
+  :defer)
+
+(use-package ef-themes
+  :load-path "lib/ef-themes"
+  :demand t
+  :init
+  (add-to-list 'custom-theme-load-path (expand-file-name "lib/ef-themes" emacs-dir))
+  (add-to-list 'custom-theme-load-path (expand-file-name "lib/modus-themes" emacs-dir))
+  :config
+  (load-theme 'ef-bio t))
+
 (use-package which-key
   :hook (emacs-startup . which-key-mode))
 

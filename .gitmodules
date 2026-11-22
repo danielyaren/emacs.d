@@ -46,3 +46,9 @@
 [submodule "lib/embark"]
 	path = lib/embark
 	url = https://github.com/oantolin/embark
+[submodule "lib/ef-themes"]
+	path = lib/ef-themes
+	url = https://github.com/protesilaos/ef-themes
+[submodule "lib/modus-themes"]
+	path = lib/modus-themes
+	url = https://github.com/protesilaos/modus-themes

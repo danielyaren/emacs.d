@@ -51,6 +51,4 @@
 ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
 
-(load-theme 'manoj-dark t)
-
 ;;; early-init.el ends here
