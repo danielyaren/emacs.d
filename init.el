@@ -192,6 +192,19 @@
   (interactive)
   (find-file emacs-dir))
 
+(defun my/cheatsheet ()
+  "Open the personal keybinding cheatsheet in a temporary buffer."
+  (interactive)
+  (let ((buf (get-buffer-create "*Cheatsheet*"))
+        (file (expand-file-name "cheatsheet.txt" emacs-dir)))
+    (with-current-buffer buf
+      (let ((inhibit-read-only t))
+        (erase-buffer)
+        (insert-file-contents file)
+        (goto-char (point-min)))
+      (special-mode))
+    (pop-to-buffer buf)))
+
 (defun rename-this-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
@@ -301,6 +314,9 @@ Point stays in the upper window."
 
 ;; Open Emacs directory.
 (global-set-key (kbd "C-x ?") 'open-emacs-dir)
+
+;; Open personal keybinding cheatsheet.
+(global-set-key (kbd "C-c ?") 'my/cheatsheet)
 
 ;; Open folder in a file browser.
 (global-set-key (kbd "C-x /") 'browse-file-directory)

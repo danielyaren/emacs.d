@@ -1,0 +1,49 @@
+Emacs Cheatsheet  (press 'q' to close)
+======================================================================
+
+REVIEWING CHANGES (GIT & DIFFS)
+  C-x g           Magit status (s stage, u unstage, k discard, g refresh)
+  C-x M-g         Magit dispatch
+  C-x v ] / [     Next / previous changed hunk (diff-hl, repeatable)
+  C-x v =         Show hunk diff
+  C-x v n         Revert hunk at point
+
+CODEBASE NAVIGATION (PROJECTS & SEARCH)
+  C-x p p         Switch project
+  C-x p f         Find file in project
+  C-x p b         Switch buffer in project
+  C-x b           Switch buffer / recent files
+  M-s g           Ripgrep across project
+  M-s l / L       Search lines in buffer / all project buffers
+  M-g i / I       Jump to symbol in buffer / all project buffers
+  M-g g           Go to line
+  M-g f           Jump to errors & warnings (flymake)
+  C-: / M-g w     Jump to char / word on screen (avy)
+
+LSP & CODE ACTIONS (EGLOT)
+  M-.             Jump to definition
+  M-,             Jump back from definition
+  M-?             Find all references
+  C-c l r         Rename symbol
+  C-c l a         Code actions / quick fixes
+  C-c l f         Format buffer or region
+  C-c l d         Show docs at point
+
+EMBARK (ACT ON ANYTHING)
+  C-.             Actions on thing at point or minibuffer candidate
+  C-. E           Export search results (e.g. ripgrep) to a buffer
+  C-;             Do what I mean (default action)
+  C-h B           Search all active keybindings
+
+WINDOWS, EDITING & TOOLS
+  C-x o           Jump to window by letter (ace-window)
+  M-o             Other window
+  C-c w u / r     Undo / redo window layout
+  C-w             Kill region or backward word
+  C-a             Toggle first non-whitespace / line start
+  M-y             Browse kill ring history
+  C-x m / C-x 9   Eshell / mini-eshell at bottom
+  C-x C-j         Jump to Dired for current file
+  C-x ?           Open .emacs.d
+  C-c p s / t / r Profiler start / stop / report
+  C-c ?           Open this cheatsheet
