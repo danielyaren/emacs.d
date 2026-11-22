@@ -40,3 +40,9 @@
 [submodule "lib/corfu"]
 	path = lib/corfu
 	url = https://github.com/minad/corfu
+[submodule "lib/diff-hl"]
+	path = lib/diff-hl
+	url = https://github.com/dgutov/diff-hl
+[submodule "lib/embark"]
+	path = lib/embark
+	url = https://github.com/oantolin/embark

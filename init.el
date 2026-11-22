@@ -74,8 +74,31 @@
 ;; Middle-click paste at location.
 (setq mouse-yank-at-point t)
 
-;; Automatically update a buffer.
+;; Automatically update buffers (essential when AI CLIs edit files on disk).
+(setq global-auto-revert-non-file-buffers t
+      auto-revert-verbose nil)
 (global-auto-revert-mode 1)
+
+;; Persist minibuffer history and recently opened files across sessions.
+(savehist-mode 1)
+(recentf-mode 1)
+
+;; Repeat multi-key navigation, diff, and window commands with a single key.
+(repeat-mode 1)
+
+;; Undo/redo window layouts (useful after opening Magit or diffs).
+(setq winner-dont-bind-my-keys t)
+(winner-mode 1)
+(global-set-key (kbd "C-c w u") 'winner-undo)
+(global-set-key (kbd "C-c w r") 'winner-redo)
+
+;; Show line numbers in code buffers.
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+
+;; Side-by-side diffs without a separate floating control frame.
+(with-eval-after-load 'ediff
+  (setq ediff-window-setup-function #'ediff-setup-windows-plain
+        ediff-split-window-function #'split-window-horizontally))
 
 ;; Eliminate duplicates in the kill ring. That is, if you kill the
 ;; same thing twice, you won't have to use M-y twice to get past it
@@ -434,11 +457,35 @@ Point stays in the upper window."
 (use-package consult
   :load-path "lib/consult"
   :bind (("C-x b" . consult-buffer)
+         ("C-x p b" . consult-project-buffer)
          ("M-y" . consult-yank-pop)
          ("M-g g" . consult-goto-line)
+         ("M-g f" . consult-flymake)
          ("M-g i" . consult-imenu)
+         ("M-g I" . consult-imenu-multi)
          ("M-s l" . consult-line)
-         ("M-s g" . consult-ripgrep)))
+         ("M-s L" . consult-line-multi)
+         ("M-s g" . consult-ripgrep))
+  :init
+  (autoload 'consult-flymake "consult-flymake" nil t)
+  (autoload 'consult-imenu "consult-imenu" nil t)
+  (autoload 'consult-imenu-multi "consult-imenu" nil t)
+  (autoload 'consult-xref "consult-xref" nil t)
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref))
+
+(use-package embark
+  :load-path "lib/embark"
+  :bind (("C-." . embark-act)
+         ("C-;" . embark-dwim)
+         ("C-h B" . embark-bindings))
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command))
+
+(use-package embark-consult
+  :load-path "lib/embark"
+  :after (embark consult)
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package corfu
   :load-path ("lib/corfu" "lib/corfu/extensions")
@@ -471,7 +518,67 @@ Point stays in the upper window."
 (use-package magit
   :load-path "lib/magit/lisp"
   :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch)))
+         ("C-x M-g" . magit-dispatch))
+  :config
+  (setq magit-diff-refine-hunk 'all))
+
+(use-package diff-hl
+  :load-path "lib/diff-hl"
+  :hook ((emacs-startup . global-diff-hl-mode)
+         (dired-mode . diff-hl-dired-mode)
+         (magit-post-refresh . diff-hl-magit-post-refresh))
+  :init
+  (autoload 'diff-hl-dired-mode "diff-hl-dired" nil t)
+  :config
+  (require 'diff-hl-flydiff)
+  (diff-hl-flydiff-mode 1))
+
+;; Tree-sitter grammars and mode mappings (C#, TypeScript/React, JS, JSON).
+(with-eval-after-load 'treesit
+  (setq treesit-language-source-alist
+        '((c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
+          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+          (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+          (json "https://github.com/tree-sitter/tree-sitter-json"))))
+
+(defun my/install-treesit-grammars ()
+  "Install all configured tree-sitter grammars."
+  (interactive)
+  (require 'treesit)
+  (dolist (grammar treesit-language-source-alist)
+    (unless (treesit-language-available-p (car grammar))
+      (treesit-install-language-grammar (car grammar)))))
+
+(when (and (fboundp 'treesit-available-p) (treesit-available-p))
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . tsx-ts-mode))
+  (when (treesit-language-available-p 'c-sharp)
+    (add-to-list 'major-mode-remap-alist '(csharp-mode . csharp-ts-mode)))
+  (when (treesit-language-available-p 'javascript)
+    (add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
+    (add-to-list 'major-mode-remap-alist '(js-mode . js-ts-mode)))
+  (when (treesit-language-available-p 'json)
+    (add-to-list 'major-mode-remap-alist '(js-json-mode . json-ts-mode))))
+
+;; Built-in LSP client (needs `csharp-ls` for C# and `typescript-language-server` for TS/JS).
+(use-package eglot
+  :defer t
+  :hook ((csharp-mode . eglot-ensure)
+         (csharp-ts-mode . eglot-ensure)
+         (typescript-ts-mode . eglot-ensure)
+         (tsx-ts-mode . eglot-ensure)
+         (js-ts-mode . eglot-ensure))
+  :bind (:map eglot-mode-map
+              ("C-c l r" . eglot-rename)
+              ("C-c l a" . eglot-code-actions)
+              ("C-c l f" . eglot-format)
+              ("C-c l d" . eldoc))
+  :config
+  (setq eglot-autoshutdown t
+        eglot-events-buffer-config '(:size 0 :format full)
+        eglot-sync-connect nil))
 
 (use-package emacs-lisp-mode
   :no-require t
