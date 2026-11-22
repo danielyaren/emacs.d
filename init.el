@@ -464,6 +464,22 @@ Point stays in the upper window."
   :config
   (load-theme 'ef-bio t))
 
+(use-package spacious-padding
+  :load-path "lib/spacious-padding"
+  :hook (emacs-startup . spacious-padding-mode)
+  :config
+  (setq spacious-padding-widths
+        '(:internal-border-width 8
+          :header-line-width 4
+          :mode-line-width 4
+          :tab-width 4
+          :right-divider-width 20
+          :scroll-bar-width 8
+          :fringe-width 8)
+        spacious-padding-subtle-frame-lines
+        '(:mode-line-active default
+          :mode-line-inactive vertical-border)))
+
 (use-package which-key
   :hook (emacs-startup . which-key-mode))
 

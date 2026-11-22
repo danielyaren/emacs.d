@@ -52,3 +52,6 @@
 [submodule "lib/modus-themes"]
 	path = lib/modus-themes
 	url = https://github.com/protesilaos/modus-themes
+[submodule "lib/spacious-padding"]
+	path = lib/spacious-padding
+	url = https://github.com/protesilaos/spacious-padding
