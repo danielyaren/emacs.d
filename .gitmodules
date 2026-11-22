@@ -1,0 +1,42 @@
+[submodule "lib/emacs-async"]
+	path = lib/emacs-async
+	url = https://github.com/jwiegley/emacs-async
+[submodule "lib/avy"]
+	path = lib/avy
+	url = https://github.com/abo-abo/avy
+[submodule "lib/ace-window"]
+	path = lib/ace-window
+	url = https://github.com/abo-abo/ace-window
+[submodule "lib/compat"]
+	path = lib/compat
+	url = https://github.com/emacs-compat/compat
+[submodule "lib/with-editor"]
+	path = lib/with-editor
+	url = https://github.com/magit/with-editor
+[submodule "lib/transient"]
+	path = lib/transient
+	url = https://github.com/magit/transient
+[submodule "lib/magit"]
+	path = lib/magit
+	url = https://github.com/magit/magit
+[submodule "lib/cond-let"]
+	path = lib/cond-let
+	url = https://github.com/tarsius/cond-let
+[submodule "lib/llama"]
+	path = lib/llama
+	url = https://github.com/tarsius/llama
+[submodule "lib/vertico"]
+	path = lib/vertico
+	url = https://github.com/minad/vertico
+[submodule "lib/marginalia"]
+	path = lib/marginalia
+	url = https://github.com/minad/marginalia
+[submodule "lib/orderless"]
+	path = lib/orderless
+	url = https://github.com/oantolin/orderless
+[submodule "lib/consult"]
+	path = lib/consult
+	url = https://github.com/minad/consult
+[submodule "lib/corfu"]
+	path = lib/corfu
+	url = https://github.com/minad/corfu
