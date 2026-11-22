@@ -115,6 +115,8 @@
       scroll-step 1
       scroll-conservatively 10000
       scroll-preserve-screen-position 1)
+(when (fboundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode 1))
 
 ;; Nicer line spacing.
 (setq-default line-spacing 3)
@@ -479,6 +481,33 @@ Point stays in the upper window."
         spacious-padding-subtle-frame-lines
         '(:mode-line-active default
           :mode-line-inactive vertical-border)))
+
+(use-package pulsar
+  :load-path "lib/pulsar"
+  :hook ((emacs-startup . pulsar-global-mode)
+         (consult-after-jump . pulsar-recenter-top)
+         (consult-after-jump . pulsar-reveal-entry))
+  :config
+  (setq pulsar-delay 0.04
+        pulsar-iterations 8
+        pulsar-face 'pulsar-green))
+
+(use-package breadcrumb
+  :load-path "lib/breadcrumb"
+  :hook (prog-mode . breadcrumb-local-mode)
+  :config
+  ;; Title bar already shows the file path, so only display symbol/imenu crumbs.
+  (advice-add #'breadcrumb-project-crumbs :override (lambda () "")))
+
+(use-package minions
+  :load-path "lib/minions"
+  :hook (emacs-startup . minions-mode))
+
+(use-package lin
+  :load-path "lib/lin"
+  :hook (emacs-startup . lin-global-mode)
+  :config
+  (setq lin-face 'lin-green))
 
 (use-package which-key
   :hook (emacs-startup . which-key-mode))

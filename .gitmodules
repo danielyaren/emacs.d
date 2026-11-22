@@ -55,3 +55,15 @@
 [submodule "lib/spacious-padding"]
 	path = lib/spacious-padding
 	url = https://github.com/protesilaos/spacious-padding
+[submodule "lib/pulsar"]
+	path = lib/pulsar
+	url = https://github.com/protesilaos/pulsar
+[submodule "lib/breadcrumb"]
+	path = lib/breadcrumb
+	url = https://github.com/joaotavora/breadcrumb
+[submodule "lib/minions"]
+	path = lib/minions
+	url = https://github.com/tarsius/minions
+[submodule "lib/lin"]
+	path = lib/lin
+	url = https://github.com/protesilaos/lin
