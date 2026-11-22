@@ -654,6 +654,21 @@ Point stays in the upper window."
               ("C-c C-c" . eval-defun)
               ("C-c C-e" . ielm)))
 
+(use-package markdown-mode
+  :load-path "lib/markdown-mode"
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.\\(?:md\\|MD\\|markdown\\|mkd\\|mdown\\|mkdn\\|mdwn\\)\\'" . gfm-mode))
+  :hook (markdown-mode . visual-line-mode)
+  :bind (:map markdown-mode-map
+              ("C-c C-e" . markdown-do))
+  :config
+  (setq markdown-fontify-code-blocks-natively t
+        markdown-command (or (executable-find "pandoc")
+                             (executable-find "cmark")
+                             (executable-find "multimarkdown")
+                             "markdown")))
+
 ;; Restore the values we deferred in early-init.el for startup speed.
 (add-hook 'emacs-startup-hook
           (lambda ()

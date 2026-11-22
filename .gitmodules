@@ -64,3 +64,6 @@
 [submodule "lib/lin"]
 	path = lib/lin
 	url = https://github.com/protesilaos/lin
+[submodule "lib/markdown-mode"]
+	path = lib/markdown-mode
+	url = https://github.com/jrblevin/markdown-mode
