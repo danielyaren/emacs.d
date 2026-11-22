@@ -492,13 +492,6 @@ Point stays in the upper window."
         pulsar-iterations 8
         pulsar-face 'pulsar-green))
 
-(use-package breadcrumb
-  :load-path "lib/breadcrumb"
-  :hook (prog-mode . breadcrumb-local-mode)
-  :config
-  ;; Title bar already shows the file path, so only display symbol/imenu crumbs.
-  (advice-add #'breadcrumb-project-crumbs :override (lambda () "")))
-
 (use-package minions
   :load-path "lib/minions"
   :hook (emacs-startup . minions-mode))
