@@ -25,6 +25,11 @@
   (eval-when-compile (file-truename user-emacs-directory))
   "The path to the .emacs.d directory. Must end with a slash.")
 
+;; Root directory containing git repositories.
+(defvar my/repos-dir
+  (if (eq system-type 'windows-nt) "c:/repos/" "~/repos/")
+  "The path to the repositories directory. Must end with a slash.")
+
 
 ;; In noninteractive sessions, prioritize non-byte-compiled source files to
 ;; prevent the use of stale byte-code. Otherwise, it saves us a little IO time
@@ -194,6 +199,30 @@
   (interactive)
   (find-file emacs-dir))
 
+(defun open-repos-dir ()
+  "Open the repositories directory."
+  (interactive)
+  (find-file my/repos-dir))
+
+(defun my/refresh-projects ()
+  "Discover projects under `my/repos-dir' and prune deleted ones."
+  (interactive)
+  (require 'project)
+  (when (file-directory-p my/repos-dir)
+    (project-remember-projects-under my/repos-dir))
+  (project-forget-zombie-projects))
+
+(with-eval-after-load 'project
+  (setq project-switch-commands
+        '((project-find-file "Find file" ?f)
+          (consult-ripgrep "Ripgrep" ?g)
+          (project-find-dir "Find directory" ?d)
+          (project-dired "Dired" ?D)
+          (project-eshell "Eshell" ?e)
+          (magit-project-status "Magit" ?m)))
+  (define-key project-prefix-map "m" #'magit-project-status)
+  (my/refresh-projects))
+
 (defun my/cheatsheet ()
   "Open the personal keybinding cheatsheet in a temporary buffer."
   (interactive)
@@ -316,6 +345,9 @@ Point stays in the upper window."
 
 ;; Open Emacs directory.
 (global-set-key (kbd "C-x ?") 'open-emacs-dir)
+
+;; Open repositories directory.
+(global-set-key (kbd "C-c r") 'open-repos-dir)
 
 ;; Open personal keybinding cheatsheet.
 (global-set-key (kbd "C-c ?") 'my/cheatsheet)
@@ -584,10 +616,12 @@ Point stays in the upper window."
 
 (use-package magit
   :load-path "lib/magit/lisp"
+  :commands (magit-project-status magit-list-repositories)
   :bind (("C-x g" . magit-status)
          ("C-x M-g" . magit-dispatch))
   :config
-  (setq magit-diff-refine-hunk 'all))
+  (setq magit-diff-refine-hunk 'all
+        magit-repository-directories `((,my/repos-dir . 1))))
 
 (use-package diff-hl
   :load-path "lib/diff-hl"

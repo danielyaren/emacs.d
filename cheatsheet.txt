@@ -9,9 +9,11 @@ REVIEWING CHANGES (GIT & DIFFS)
   C-x v n         Revert hunk at point
 
 CODEBASE NAVIGATION (PROJECTS & SEARCH)
-  C-x p p         Switch project
+  C-x p p         Switch project (auto-discovered from repos dir)
   C-x p f         Find file in project
   C-x p b         Switch buffer in project
+  C-x p m         Magit status for project
+  C-c r           Open repos directory
   C-x b           Switch buffer / recent files
   M-s g           Ripgrep across project
   M-s l / L       Search lines in buffer / all project buffers
