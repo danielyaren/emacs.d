@@ -417,8 +417,41 @@ Point stays in the upper window."
       window-divider-default-bottom-width 1
       window-divider-default-right-width 1)
 
-;; Empty the frame title.
-(setq-default frame-title-format "%f")
+(defun my/git-branch-from-head (root)
+  "Read the current Git branch from ROOT's HEAD file without spawning git."
+  (let* ((dot-git (expand-file-name ".git" root))
+         (git-dir (cond
+                   ((file-directory-p dot-git) dot-git)
+                   ((file-regular-p dot-git)
+                    (with-temp-buffer
+                      (insert-file-contents dot-git)
+                      (when (looking-at "gitdir: \\(.+\\)$")
+                        (expand-file-name (match-string 1) root))))))
+         (head-file (and git-dir (expand-file-name "HEAD" git-dir))))
+    (when (and head-file (file-readable-p head-file))
+      (with-temp-buffer
+        (insert-file-contents head-file)
+        (cond
+         ((looking-at "ref: refs/heads/\\(.+\\)$") (match-string 1))
+         ((looking-at "\\([0-9a-f]\\{7\\}\\)") (match-string 1)))))))
+
+(defun my/frame-title ()
+  "Return the frame title: project name and Git branch, or buffer name."
+  (if-let* ((default-directory default-directory)
+            ((not (file-remote-p default-directory)))
+            (proj (project-current nil))
+            (name (project-name proj)))
+      (let ((branch (or (and (stringp vc-mode)
+                             (string-match "\\` Git[-:@!]\\(.+\\)" vc-mode)
+                             (match-string 1 vc-mode))
+                        (my/git-branch-from-head (project-root proj)))))
+        (if branch
+            (format "%s (%s)" name branch)
+          name))
+    (buffer-name)))
+
+;; Show project name and Git branch in the frame title.
+(setq-default frame-title-format '(:eval (my/frame-title)))
 
 ;; Reduce rendering/line scan work for Emacs by not rendering cursors or regions
 ;; in non-focused windows.
@@ -523,6 +556,10 @@ Point stays in the upper window."
   (setq pulsar-delay 0.04
         pulsar-iterations 8
         pulsar-face 'pulsar-green))
+
+(use-package breadcrumb
+  :load-path "lib/breadcrumb"
+  :hook (prog-mode . breadcrumb-local-mode))
 
 (use-package minions
   :load-path "lib/minions"
